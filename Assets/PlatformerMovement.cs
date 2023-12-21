@@ -193,12 +193,18 @@ public class PlatformerMovement : MonoBehaviour
     {
         if (!dead)
         {
-            if (collision.gameObject.tag == "Enemy")
+            if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Deathbox")
             {
                 if (gotHitCooldown <= 0)
                 {
-
-                    currentHealth -= 1;
+                    if (collision.gameObject.tag == "Deathbox")
+                    {
+                        currentHealth = 0;
+                    }
+                    else
+                    {
+                        currentHealth -= 1;
+                    }
                     gotHitCooldown = gotHitCooldownTime;
                     float xHitForce = 1;
                     if (collision.transform.position.x > transform.position.x)
