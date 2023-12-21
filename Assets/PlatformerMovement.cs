@@ -9,6 +9,8 @@ public class PlatformerMovement : MonoBehaviour
     public BoxCollider2D uBoxCollider;
     public LayerMask uPlatformLayerMask;
     public float uGroundCheckExtraHeight;
+    public SpriteRenderer characterSpriteRenderer;
+    public Animator animationController;
 
     [Header("Internal Variables")]
     public float xMoveInput;
@@ -16,6 +18,7 @@ public class PlatformerMovement : MonoBehaviour
     public bool jumpInput;
     public float gravMultiplier;
     public float jumpBufferTimer;
+    public bool facingRight = true;
 
     [Header("Design Variables")]
     public float maxAcceleration;
@@ -45,6 +48,8 @@ public class PlatformerMovement : MonoBehaviour
 
         xMoveInput = Input.GetAxis("Horizontal");
         desiredXVelocity = xMoveInput * maxSpeed;
+
+        
 
         if (Input.GetButtonDown("Jump"))
         {
@@ -91,6 +96,16 @@ public class PlatformerMovement : MonoBehaviour
         
         Vector2 newVelocity = uRigidbody2D.velocity;
         newVelocity.x = Mathf.MoveTowards(newVelocity.x, desiredXVelocity, maxSpeedChange);
+        
+        if (newVelocity.x > 0 || newVelocity.x < 0)
+        {
+            animationController.SetFloat("Movement", 1);
+        }
+        else
+        {
+            animationController.SetFloat("Movement", 0);
+        }
+        
         uRigidbody2D.velocity = newVelocity;
 
         if (jumpInput)
@@ -98,6 +113,7 @@ public class PlatformerMovement : MonoBehaviour
             
             if (IsOnGround())
             {
+                animationController.SetTrigger("Jump");
                 jumpInput = false;
                 Vector3 newJumpVelocity = uRigidbody2D.velocity;
                 float jumpSpeed = Mathf.Sqrt(-2f * Physics2D.gravity.y * uRigidbody2D.gravityScale * jumpHeight);
@@ -129,6 +145,17 @@ public class PlatformerMovement : MonoBehaviour
         if (uRigidbody2D.velocity.y < -0.01f) 
         { 
             gravMultiplier = downwardMovementMultiplier; 
+        }
+
+        if (desiredXVelocity > 0)
+        {
+            facingRight = true;
+            characterSpriteRenderer.flipX = false;
+        }
+        else if (desiredXVelocity < 0)
+        {
+            facingRight = false;
+            characterSpriteRenderer.flipX = true;
         }
     }
 
