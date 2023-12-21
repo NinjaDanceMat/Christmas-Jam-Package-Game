@@ -32,8 +32,8 @@ public class PlayerProjectileShooter : MonoBehaviour
         }
         else
         {
-            projectileForceFacing = 0;
-            projectileForceFacingUp = upwardSpecialForceMultiplier;
+            //projectileForceFacing = 0;
+            //projectileForceFacingUp = upwardSpecialForceMultiplier;
         }
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
