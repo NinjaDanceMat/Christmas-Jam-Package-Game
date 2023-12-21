@@ -81,7 +81,7 @@ public class PlatformerMovement : MonoBehaviour
             if (Mathf.Sign(desiredXVelocity) != Mathf.Sign(uRigidbody2D.velocity.x))
             {
                 maxSpeedChange = turnSpeed * Time.deltaTime;
-                Debug.Log("Turning");
+               
             }
             else
             {
