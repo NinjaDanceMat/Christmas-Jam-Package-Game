@@ -148,6 +148,10 @@ MonoBehaviour:
   EndPoint: {fileID: 4719678165182580229}
   goingTowardsStart: 0
   speed: 10
+  dead: 0
+  currentHealth: 10
+  maxHealth: 10
+  animationController: {fileID: 5411246634954278631}
 --- !u!1 &3499991017173121656
 GameObject:
   m_ObjectHideFlags: 0
