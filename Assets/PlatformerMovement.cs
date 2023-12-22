@@ -11,6 +11,8 @@ public class PlatformerMovement : MonoBehaviour
     public float uGroundCheckExtraHeight;
     public SpriteRenderer characterSpriteRenderer;
     public Animator animationController;
+    public Transform origin;
+    public GameObject deathUI;
 
     [Header("Internal Variables")]
     public float xMoveInput;
@@ -49,6 +51,14 @@ public class PlatformerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (dead && Input.GetKeyDown(KeyCode.E))
+        {
+            deathUI.SetActive(false);
+            transform.position = origin.position;
+            dead = false;
+            currentHealth = maxHealth;
+            animationController.SetTrigger("Undead");
+        }
         Vector2 newGravity = new Vector2(0, (-2 * jumpHeight) / (timeToJumpApex * timeToJumpApex));
         uRigidbody2D.gravityScale = (newGravity.y / Physics2D.gravity.y) * gravMultiplier;
 
@@ -218,6 +228,7 @@ public class PlatformerMovement : MonoBehaviour
                     }
                     else
                     {
+                        deathUI.SetActive(true);
                         animationController.SetTrigger("Death");
                         dead = true;
                     }
